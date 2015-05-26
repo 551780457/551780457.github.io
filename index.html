@@ -186,9 +186,10 @@
 </ul>
 <p><code>注：register() 与 unregister() 一般在onResume()、onPause()方法中调用</code></p>
 <h2 id="@Subscribe、@Produce：负责订阅事件、产生事件">@Subscribe、@Produce：负责订阅事件、产生事件</h2><h2 id="执行线程">执行线程</h2><p>Otto的事件调用默认是在主线程（应用的UI线程）中调用，</p>
-<p>//下面两种声明方式是一样的效果.<br>Bus bus1 = new Bus();<br>Bus bus2 = new Bus(ThreadEnforcer.MAIN);<br>如果您不关注在哪个线程中执行事件函数，则可以通过 ThreadEnforcer.ANY 来初始化Bus对象，<br>如果上面2个线程控制方式满足不了您的需求，您还可以通过实现ThreadEnforcer接口来定义自己的线程模型。</p>
+<figure class="highlight vhdl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//下面两种声明方式是一样的效果.</span><br><span class="line"><span class="keyword">Bus</span> bus1 = <span class="keyword">new</span> <span class="keyword">Bus</span>();</span><br><span class="line"><span class="keyword">Bus</span> bus2 = <span class="keyword">new</span> <span class="keyword">Bus</span>(ThreadEnforcer.MAIN);</span><br></pre></td></tr></table></figure>
+<p>如果您不关注在哪个线程中执行事件函数，则可以通过<code>ThreadEnforcer.ANY</code> 来初始化Bus对象，<br>如果上面2个线程控制方式满足不了您的需求，您还可以通过实现<code>ThreadEnforcer</code>接口来定义自己的线程模型。</p>
 <h1 id="注意：">注意：</h1><ol>
-<li>Bus最好是单例。如果是不同的Bus，事件就无法分发给其他Bus的订阅了。</li>
+<li>Bus最好是<code>单例</code>。如果是不同的Bus，事件就无法分发给其他Bus的订阅了。</li>
 <li>不管是生产者还是订阅者都需要向Bus注册自己。</li>
 <li>如果在注册的时候，产生事件的方法已经存在了该事件类型的订阅者，会调用事件产生方法，把事件分发给事件订阅者。</li>
 <li>如果在注册的时候，订阅了一个事件类型，并且有产生事件的方法，那么会立即调用产生事件的方法，把事件分发给这个订阅者方法。</li>
